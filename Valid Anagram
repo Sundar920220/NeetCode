@@ -1,0 +1,29 @@
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        // Check if the lengths of the two input strings are different
+        if (t.length() != s.length()) {
+            return false;
+        }
+        
+        // Create an array to count the occurrences of each character (assuming lowercase English letters)
+        int[] char_Count = new int[26];
+        
+        // Iterate through both strings simultaneously
+        for (int i = 0; i < s.length(); i++) {
+            // Increment the count for the character at the current position in string 's'
+            char_Count[s.charAt(i) - 'a']++;
+            // Decrement the count for the character at the current position in string 't'
+            char_Count[t.charAt(i) - 'a']--;
+        }
+        
+        // Check if all counts in the 'char_Count' array are zero
+        for (int count : char_Count) {
+            if (count != 0) {
+                return false;
+            }
+        }
+        
+        // If all counts are zero, the strings are anagrams
+        return true;
+    }
+}
