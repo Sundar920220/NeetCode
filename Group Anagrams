@@ -1,0 +1,51 @@
+class Solution {
+    // Helper method to calculate the frequency of each character in a string
+    private String getFrequency(String str) {
+        // Initialize an array to store the frequency of each lowercase letter (26 letters)
+        int[] frequency = new int[26];
+        
+        // Count the frequency of each character in the input string
+        for (char c : str.toCharArray()) {
+            frequency[c - 'a']++;
+        }
+        
+        // Create a StringBuilder to construct a frequency representation
+        StringBuilder sb = new StringBuilder();
+        
+        // Append each character and its frequency to the StringBuilder
+        for (int i : frequency) {
+            char c = 'a';
+            sb.append(c);
+            sb.append(i);
+        }
+        
+        // Return the frequency representation as a string
+        return sb.toString();
+    }
+
+    // Main method to group anagrams in an array of strings
+    public List<List<String>> groupAnagrams(String[] strs) {
+        // Create a HashMap to store anagrams grouped by their frequency representations
+        HashMap<String, List<String>> frequencyStringsMap = new HashMap<>();
+        
+        // Iterate through the input strings
+        for (String str : strs) {
+            // Calculate the frequency representation of the current string
+            String frequencyString = getFrequency(str);
+            
+            // Check if the frequency representation already exists in the HashMap
+            if (frequencyStringsMap.containsKey(frequencyString)) {
+                // If it exists, add the current string to the corresponding group
+                frequencyStringsMap.get(frequencyString).add(str);
+            } else {
+                // If it doesn't exist, create a new group and add the current string
+                ArrayList<String> strList = new ArrayList<>();
+                strList.add(str);
+                frequencyStringsMap.put(frequencyString, strList);
+            }
+        }
+        
+        // Convert the values (groups of anagrams) from the HashMap to a list and return it
+        return new ArrayList<>(frequencyStringsMap.values());
+    }
+}
