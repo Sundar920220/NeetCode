@@ -1,0 +1,46 @@
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        // Step 1: Create an array of Lists to represent a "bucket" where each bucket
+        // will hold numbers with the same frequency.
+        List<Integer>[] bucket = new List[nums.length + 1];
+        
+        // Step 2: Create a HashMap to store the frequency of each number in 'nums'.
+        HashMap<Integer, Integer> frequencyMap = new HashMap<>();
+        
+        // Step 3: Populate the frequency map by iterating through 'nums'.
+        for (int n : nums) {
+            frequencyMap.put(n, frequencyMap.getOrDefault(n, 0) + 1);
+        }
+        
+        // Step 4: Place numbers into the appropriate bucket based on their frequency.
+        for (int key : frequencyMap.keySet()) {
+            int frequency = frequencyMap.get(key);
+            
+            // If the bucket for this frequency doesn't exist, create it.
+            if (bucket[frequency] == null) {
+                bucket[frequency] = new ArrayList<>();
+            }
+            
+            // Add the number to the bucket.
+            bucket[frequency].add(key);
+        }
+        
+        // Step 5: Initialize the result array to store the top 'k' frequent elements.
+        int res[] = new int[k];
+        int counter = 0; // Counter to keep track of the number of elements added to 'res'.
+        
+        // Step 6: Traverse the bucket array in reverse order to retrieve the top 'k' frequent elements.
+        for (int pos = bucket.length - 1; pos >= 0 && counter < k; pos--) {
+            if (bucket[pos] != null) {
+                for (Integer integer : bucket[pos]) {
+                    // Add each element from the bucket to the result array.
+                    res[counter++] = integer;
+                }
+            }
+        }
+        
+        // Step 7: Return the result array containing the top 'k' frequent elements.
+        return res;
+    }
+}
+
