@@ -1,0 +1,47 @@
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        for (int i = 0; i < 9; i++) {
+            if (!isValidRow(board, i) || !isValidCol(board, i) || !isValidBlock(board, i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public boolean isValidRow(char[][] board, int row) {
+        HashSet<Character> seen = new HashSet<>();
+        for (int col = 0; col < 9; col++) {
+            char cell = board[row][col];
+            if (cell != '.' && !seen.add(cell)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isValidCol(char[][] board, int col) {
+        HashSet<Character> seen = new HashSet<>();
+        for (int row = 0; row < 9; row++) {
+            char cell = board[row][col];
+            if (cell != '.' && !seen.add(cell)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isValidBlock(char[][] board, int block) {
+        HashSet<Character> seen = new HashSet<>();
+        int startRow = (block / 3) * 3;
+        int startCol = (block % 3) * 3;
+        for (int row = startRow; row < startRow + 3; row++) {
+            for (int col = startCol; col < startCol + 3; col++) {
+                char cell = board[row][col];
+                if (cell != '.' && !seen.add(cell)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
