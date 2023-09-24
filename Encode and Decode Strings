@@ -1,0 +1,49 @@
+public class Codec {
+
+    // Encodes a list of strings to a single string.
+    public String encode(List<String> strs) {
+        StringBuilder encodedString = new StringBuilder();
+        
+        // Iterate through each string in the list
+        for (String str : strs) {
+            // Append the length of the string followed by '#' to separate length and string data
+            encodedString.append(str.length()).append("#").append(str);
+        }
+        
+        // Return the encoded string as a single string
+        return encodedString.toString();
+    }
+
+    /*
+     * Decodes a single string to a list of strings.
+     * 
+     * @param str: A string
+     * @return: A list of decoded strings
+     */
+    public List<String> decode(String str) {
+        List<String> list = new ArrayList<>();
+        int i = 0;
+        
+        // Iterate through the encoded string
+        while (i < str.length()) {
+            int j = i;
+            
+            // Find the '#' character to extract the length of the next string
+            while (str.charAt(j) != '#') {
+                j++;
+            }
+            
+            // Parse the length from the substring and convert it to an integer
+            int length = Integer.valueOf(str.substring(i, j));
+            
+            // Update the index to point to the start of the next string
+            i = j + 1 + length;
+            
+            // Extract the next string using the length information and add it to the list
+            list.add(str.substring(j + 1, i));
+        }
+        
+        // Return the list of decoded strings
+        return list;
+    }
+}
