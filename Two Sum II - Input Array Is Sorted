@@ -1,0 +1,32 @@
+class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+        // Initialize two pointers, one at the beginning and one at the end of the array.
+        int a_pointer = 0;
+        int b_pointer = numbers.length - 1;
+        int nums_a, nums_b;
+
+        // Iterate through the array using the two pointers.
+        while (a_pointer < b_pointer) {
+            nums_a = numbers[a_pointer];
+            nums_b = numbers[b_pointer];
+
+            // Check if the sum of the two elements at the pointers equals the target.
+            if (nums_a + nums_b == target) {
+                // If found, break out of the loop.
+                break;
+            }
+
+            // If the sum is less than the target, move the left pointer to the right.
+            if (nums_a + nums_b < target) {
+                a_pointer++;
+            } 
+            // If the sum is greater than the target, move the right pointer to the left.
+            else {
+                b_pointer--;
+            }
+        }
+
+        // Return an array with the indices (1-based) of the two elements that add up to the target.
+        return new int[]{a_pointer + 1, b_pointer + 1};
+    }
+}
